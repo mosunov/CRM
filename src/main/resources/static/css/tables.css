@@ -1,0 +1,72 @@
+html, body {
+    margin : 0;
+    padding : 0;
+    width: 100%;
+    height: 100%;
+}
+body {
+    font : 73% "Trebuchet MS", Arial, Helvetica, Tahoma, sans-serif;
+}
+/*Таблица*/
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    border-collapse: collapse;
+}
+.table th {
+    font-weight: bold;
+    background: #e3e1e1;
+    border: 1px solid #dddddd;
+    align-content: center;
+}
+.table td {
+    border: 1px solid #dddddd;
+    align-content: center;
+}
+.tablef {
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    border-collapse: collapse;
+    align-content: center;
+}
+.tablef th {
+    font-weight: bold;
+    background: #e3e1e1;
+    border: 1px solid #dddddd;
+    align-content: center;
+}
+.tablef td {
+    border: 1px solid #dddddd;
+    align-content: center;
+}
+/*Ссылка*/
+a:link {
+    color: #497DDD;
+    border-bottom: 1px dashed;
+    font-size: 16px;
+}
+a:visited {
+    color: #757575;
+    font-size: 16px;
+}
+a:hover {
+    color: #154088;
+    border-bottom: .07em solid;
+    font-size: 16px;
+}
+a:active {
+    color: #497DDD;
+    border-bottom: 1px dashed;
+    font-size: 16px;
+}
+/*Кнопки*/
+.button {
+    background-color: #e3e1e1;
+    border-radius: 2px;
+}
+/**/
+.hidden {
+    display: none;
+}
+form { display: inline; }

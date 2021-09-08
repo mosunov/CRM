@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: "1"
+      author: Leonid Mosunov
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: login
+                  type: varchar(31)
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_pkey
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(60)
+              - column:
+                  name: full_name
+                  type: varchar(127)
+              - column:
+                  name: role
+                  type: varchar(31)
+

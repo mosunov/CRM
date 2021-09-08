@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <meta charset="UTF-8"/>
+    <title>Edit products</title>
+</head>
+<body>
+<h1 align="center">Fill the form and press submit button</h1>
+<a href="/login"><button class="button">Login</button></a>
+<form th:action="@{/logout}"
+      method="post">
+    <input type="submit"
+           value="Logout" class="button" />
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+</form>
+<a href="/products"><button class="button">Products</button></a>
+<a href="/orders/request"><button class="button">Request orders</button></a>
+<a href="/orders/done"><button class="button">Done orders</button></a>
+<br/><br/>
+<a th:href="@{/orders/request}">
+    <div>
+        <button class="button">Cancel</button>
+    </div>
+</a>
+<br/><br/>
+<form th:action="@{/orders/addOrder}" method="post">
+    <select id="productId" name="productId">
+        <option disabled value="0">Products name</option>
+        <option th:each="product : ${products}"
+                th:value="${product.getId()}"
+                th:utext="${product.getName()} + ' ID - ' + ${product.getId()}">
+        </option>
+    </select>
+    <input type="number" min="1" name="amount" required placeholder="Amount" class="form-control">
+    <input type="number" min="0" name="unitCost" required placeholder="Unit cost" class="form-control">
+    <select id="customerPhone" name="customerPhone">
+        <option disabled value="0">Customer</option>
+        <option th:each="customer : ${customers}"
+                th:value="${customer.getPhone()}"
+                th:utext="${customer.getFullName()} + ' ' + ${customer.getPhone()}">
+        </option>
+    </select>
+    <input type="text" name="noteRequest" placeholder="Note" class="form-control">
+    <button type="submit" class="button">Add order</button>
+</form>
+</body>
+
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/orderokno.css}" >
+</head>
+
+<body>
+
+<div id="zatemnenie">
+    <div id="okno">
+        <form th:action="@{addCustomer}" method="post">
+            <input type="text" name="customerFullName" required
+                   placeholder="Full name" class="form-control"
+                   pattern="[a-zA-Z]+">
+            <input type="tel"
+                   name="customerPhone"
+                   placeholder="Telephone number"
+                   class="form-control"
+                   pattern="[+7]{1}[0-9]{11}">
+            <br/>
+            <button type="submit" class="button">Add customer</button>
+        </form>
+        <a th:href="@{#}"><button class="button">Close</button></a>
+        <br>
+    </div>
+</div>
+
+<a href="#zatemnenie">Add new customer</a>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <meta charset="UTF-8"/>
+    <title>Request List</title>
+</head>
+<body>
+<h1>Request List</h1>
+<a href="/login"><button class="button">Login</button></a>
+<form th:action="@{/logout}"
+      method="post">
+    <input type="submit"
+           value="Logout" class="button" />
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+</form>
+<a sec:authorize="hasRole('ROLE_ADMIN')" href="/products"><button class="button">Products</button></a>
+<a href="/orders/request"><button class="button">Request orders</button></a>
+<a sec:authorize="hasRole('ROLE_ADMIN')">
+<a href="/orders/done"><button class="button">Done orders</button></a>
+<br/><br/>
+<a th:href="@{/orders/addOrder}">
+    <div>
+        <button class="button">ADD ORDER</button>
+    </div>
+</a>
+</a>
+<br/><br/>
+<div>
+    <button sec:authorize="hasRole('ROLE_ADMIN')"  class="button" id="hide">Add product to order</button>
+    <br/><br/>
+    <table border="1" class="tablef">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Unit Cost</th>
+            <th>Total Cost</th>
+            <th>Customer Phone</th>
+            <th>Request Date</th>
+            <th>Request Note</th>
+        </tr>
+        <tr th:each="orders : ${request}">
+            <td th:utext="${orders.getOrderPK().getOrderId()}">...</td>
+            <td th:utext="${orders.getProductsName()}">...</td>
+            <td th:utext="${orders.getAmount()}">...</td>
+            <td th:utext="${orders.getUnitCost()}">...</td>
+            <td th:utext="${orders.getUnitCost()} * ${orders.getAmount()}">...</td>
+            <td th:utext="${orders.getStringCustomerPhone()}">...</td>
+            <td th:utext="${orders.getRequestDate()}">...</td>
+            <td th:utext="${orders.getNoteRequest()}">...</td>
+            <td class="togglable hidden">
+                <form th:action="@{/orders/update}" method="post">
+                    <select id="productId" name="productId">
+                        <option disabled value="0">Products name</option>
+                        <option th:each="product : ${products}"
+                                th:value="${product.getId()}"
+                                th:utext="${product.getName()} + ' ID - ' + ${product.getId()}">
+                        </option>
+                    </select>
+                    <input type="number" min="1" name="amount" placeholder="Amount" class="form-control">
+                    <input type="number" min="0" name="unitCost" placeholder="Unit cost" class="form-control">
+                    <input type="hidden" name="orderId" th:value="${orders.getOrderPK().getOrderId()}">
+                    <input type="hidden" name="customerPhone" th:value="${orders.getStringCustomerPhone()}">
+                    <input type="hidden" name="noteRequest" th:value="${orders.getNoteRequest()}">
+                    <button class="button" type="submit">Заказать</button>
+                </form>
+            </td>
+            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/orders/changeToDone}" method="post">
+                <td>
+                    <input type="text" name="notePurchase" placeholder="Note" class="form-control">
+                    <input type="hidden" name="orderId" th:value="${orders.getOrderPK().getOrderId()}">
+                    <button class="button" type="submit">Done</button>
+                </td>
+            </form>
+        </tr>
+    </table>
+</div>
+<script>
+    const btn = document.getElementById('hide')
+    const closableColumns = document.getElementsByClassName('togglable')
+    btn.addEventListener('click', () => {
+        Array.from(closableColumns).map(el => {
+            el.classList.toggle(('hidden'))
+        })
+    })
+</script>
+</body>
+</html>

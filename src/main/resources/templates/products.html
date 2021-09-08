@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <meta charset="UTF-8"/>
+    <title>Product List</title>
+</head>
+<body>
+<h1>Product List</h1>
+<div>
+<a href="/login"><button class="button">Login</button></a>
+<form th:action="@{/logout}"
+           method="post">
+    <input type="submit"
+           value="Logout" class="button" />
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+</form>
+<a href="/products"><button class="button">Products</button></a>
+<a href="/orders/request"><button class="button">Request orders</button></a>
+<a href="/orders/done"><button class="button">Done orders</button></a>
+</div>
+<br/>
+<a th:href="@{/products/add}">
+    <div>
+        <button class="button">ADD PRODUCT</button>
+    </div>
+</a>
+<br/>
+<div>
+    <h1 align="center">Stock balance</h1>
+    <button class="button" id="hide">To order</button>
+    <table class="tablef" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Amount Sold</th>
+            <th>Amount left</th>
+            <th>Amount We Ordered</th>
+            <th>Proceeds</th>
+            <th>Profit</th>
+            <th>Purchase Cost</th>
+        </tr>
+        <tr th:each="product : ${productsInStore}">
+            <td th:utext="${product.getId()}">...</td>
+            <td th:utext="${product.getName()}">...</td>
+            <td th:utext="${product.getAmountSold()}">...</td>
+            <td th:utext="${product.getAmountLeft()}">...</td>
+            <td th:utext="${product.getAmountWeOrdered()}">...</td>
+            <td th:utext="${product.getProceeds()}">...</td>
+            <td th:utext="${product.getProfit()}">...</td>
+            <td th:utext="${product.getPurchaseCost()}">...</td>
+            <td class="togglable hidden">
+                <form th:action="@{/products/update}" method="post">
+                    <input type="number" name="amount" required placeholder="Amount" class="form-control">
+                    <input type="number" name="cost" required placeholder="Cost" class="form-control">
+                    <input type="hidden" name="productId" th:value="${product.getId()}">
+                    <button class="button" type="submit">To order</button>
+                </form>
+            </td>
+            <td>
+                <form class="form1 hidden" th:action="@{/products/remove}" method="post">
+                    <input type="hidden" name="productId" th:value="${product.getId()}">
+                    <button class="button" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<br/><br/>
+<div>
+    <h1 align="center">All products</h1>
+    <table class="tablef" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Amount Sold</th>
+            <th>Amount left</th>
+            <th>Amount We Ordered</th>
+            <th>Proceeds</th>
+            <th>Profit</th>
+            <th>Purchase Cost</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:utext="${product.getId()}">...</td>
+            <td th:utext="${product.getName()}">...</td>
+            <td th:utext="${product.getAmountSold()}">...</td>
+            <td th:utext="${product.getAmountLeft()}">...</td>
+            <td th:utext="${product.getAmountWeOrdered()}">...</td>
+            <td th:utext="${product.getProceeds()}">...</td>
+            <td th:utext="${product.getProfit()}">...</td>
+            <td th:utext="${product.getPurchaseCost()}">...</td>
+            <td class="togglable hidden">
+                <form th:action="@{/products/update}" method="post">
+                    <input type="text" name="amount" required placeholder="Amount" class="form-control">
+                    <input type="text" name="cost" required placeholder="Cost" class="form-control">
+                    <input type="hidden" name="productId" th:value="${product.getId()}">
+                    <button class="button" type="submit">To order</button>
+                </form>
+            </td>
+            <td>
+                <form class="hidden" th:action="@{/products/remove}" method="post">
+                    <input type="hidden" name="productId" th:value="${product.getId()}">
+                    <button class="button" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    const btn = document.getElementById('hide')
+    const closableColumns = document.getElementsByClassName('togglable')
+    btn.addEventListener('click', () => {
+        Array.from(closableColumns).map(el => {
+            el.classList.toggle(('hidden'))
+        })
+    })
+</script>
+</body>
+</html>

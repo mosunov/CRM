@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <meta charset="UTF-8"/>
+    <title>Edit products</title>
+</head>
+<body>
+<h1 align="center">Fill the form and press submit button</h1>
+<a href="/login"><button class="button">Login</button></a>
+<form th:action="@{/logout}"
+      method="post">
+    <input type="submit"
+           value="Logout" class="button" />
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+</form>
+<a href="/products"><button class="button">Products</button></a>
+<a href="/orders/request"><button class="button">Request orders</button></a>
+<a href="/orders/done"><button class="button">Done orders</button></a>
+<br/><br/>
+<a th:href="@{/products}">
+    <div>
+        <button class="button">Cancel</button>
+    </div>
+</a>
+<br/>
+<form th:action="@{/products/add}" method="post">
+    <input  type="text" name="name" required placeholder="Products name" class="form-control">
+    <input  type="number" min="1" required name="amountWeOrdered" placeholder="Amount we ordered" class="form-control">
+    <input  type="number" min="0" required name="purchaseCost" placeholder="Purchase cost" class="form-control">
+    <button type="submit" class="button">Add product</button>
+</form>
+</body>
+</html>

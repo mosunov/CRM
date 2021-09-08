@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: "3"
+      author: Leonid Mosunov
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: phone
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: customer_pkey
+                    nullable: false
+                    unique: true
+              - column:
+                  name: full_name
+                  type: varchar(255)

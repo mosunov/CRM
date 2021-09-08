@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <meta charset="UTF-8" />
+    <title>Error</title>
+</head>
+<body>
+<h1>Error<a sec:authorize="hasRole('ROLE_ADMIN')" th:text="${error.errorCode}">...</a> </h1>
+<a sec:authorize="hasRole('ROLE_USER')">You haven't access rigths for this page.
+    Please, contact your boss to get them!</a>
+<a sec:authorize="hasRole('ROLE_ADMIN')">
+<div th:text="${error.errorMessage}">...</div>
+<a th:href="@{${error.url}}">Try again</a>
+</a>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+<h1>HELLO!!!</h1>
+<a href="/login"><button class="button">Login</button></a>
+<form sec:authorize="isAuthenticated()" th:action="@{/logout}"
+      method="post">
+    <input type="submit"
+           value="Logout" class="button" />
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+</form>
+<a sec:authorize="hasRole('ROLE_ADMIN')" href="/products"><button class="button">Products</button></a>
+<a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" href="/orders/request">
+    <button class="button">Request orders</button>
+</a>
+<a sec:authorize="hasRole('ROLE_ADMIN')" href="/orders/done"><button class="button">Done orders</button></a>
+</body>
+</html>

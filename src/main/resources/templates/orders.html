@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <meta charset="UTF-8"/>
+    <title>Orders List</title>
+</head>
+<body>
+<h1>Orders List</h1>
+<a href="/login"><button class="button">Login</button></a>
+<form th:action="@{/logout}"
+      method="post">
+    <input type="submit"
+           value="Logout" class="button" />
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+</form>
+<a href="/products"><button class="button">Products</button></a>
+<a href="/orders/request"><button class="button">Request orders</button></a>
+<a href="/orders/done"><button class="button">Done orders</button></a>
+<br/><br/>
+<a th:href="@{/orders/addOrder}">
+    <div>
+        <button class="button">ADD ORDER</button>
+    </div>
+</a>
+<br/><br/>
+<div>
+    <table class="table" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Unit Cost</th>
+            <th>Total Cost</th>
+            <th>Customer Phone</th>
+            <th>Request Date</th>
+            <th>Purchase Date</th>
+            <th>Request Note</th>
+            <th>Purchase Note</th>
+        </tr>
+        <tr th:each="orders : ${orders}">
+            <td th:utext="${orders.getOrderPK().getOrderId()}">...</td>
+            <td th:utext="${orders.getProductsName()}">...</td>
+            <td th:utext="${orders.getAmount()}">...</td>
+            <td th:utext="${orders.getUnitCost()}">...</td>
+            <td th:utext="${orders.getUnitCost()} * ${orders.getAmount()}">...</td>
+            <td th:utext="${orders.getStringCustomerPhone()}">...</td>
+            <td th:utext="${orders.getRequestDate()}">...</td>
+            <td th:utext="${orders.getPurchaseDate()}">...</td>
+            <td th:utext="${orders.getNoteRequest()}">...</td>
+            <td th:utext="${orders.getNotePurchase()}">...</td>
+        </tr>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
