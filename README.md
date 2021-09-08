@@ -12,6 +12,7 @@
 * Java 8
 * postgresql - в качестве базы данных
 * Spring Data JPA - для взаимодействия с БД
+* Spring Boot - основной фрэймворк
 * lombok - для уменьшения количества кода
 * JavaScript - для работы с фронтом
 * Thymeleaf - для отображения java-объектов в html  
